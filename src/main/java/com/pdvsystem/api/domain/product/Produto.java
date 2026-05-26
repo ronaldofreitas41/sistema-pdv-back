@@ -24,11 +24,11 @@ public class Produto {
     private UUID id;
 
     private Integer codigo;
-    private String nome;
-    private String categoria;
-    private Double custo;
-    private Double preco;
     private Integer estoque;
     private Integer estoqueMin;
+    private Double custo;
+    private Double preco;
+    private String categoria;
+    private String nome;
 
 }
