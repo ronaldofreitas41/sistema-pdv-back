@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fornecedor {
+public class Suplier {
 
     @Id
     @GeneratedValue
