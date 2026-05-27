@@ -18,7 +18,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContasReceber {
+public class Count {
 
     @Id
     @GeneratedValue
