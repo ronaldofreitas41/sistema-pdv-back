@@ -17,17 +17,17 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Produto {
+public class Product {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    private Integer codigo;
     private Integer estoque;
     private Integer estoqueMin;
     private Double custo;
     private Double preco;
+    private String codigo;
     private String categoria;
     private String nome;
 
