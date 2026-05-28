@@ -91,7 +91,7 @@ public class CountService {
     /*
      * Edita Contas
      */
-    public Count EditCount(UUID id, CountRequestDTO data) {
+    public Count editCount(UUID id, CountRequestDTO data) {
         Count count = countRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhuma Conta Encontrada"));
 

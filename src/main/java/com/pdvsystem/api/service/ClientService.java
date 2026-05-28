@@ -16,7 +16,7 @@ public class ClientService {
      * Cria Cliente
      */
 
-    public Client CreateClient(ClientRequestDTO data) {
+    public Client createClient(ClientRequestDTO data) {
         Client client = new Client();
 
         client.setCpf(data.cpf());
@@ -32,7 +32,7 @@ public class ClientService {
      * Busca todos os Clientes
      */
 
-    public List<Client> GetAllClients() {
+    public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
 
@@ -40,7 +40,7 @@ public class ClientService {
      *Busca Cliente por ID
      */
 
-    public Client GetClientByID(UUID id) {
+    public Client getClientByID(UUID id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum Cliente encontrado"));
     }
@@ -49,8 +49,8 @@ public class ClientService {
      * Edita Cliente
      */
 
-    public Client EditClient(UUID id, ClientRequestDTO data) {
-        Client client = GetClientByID(id);
+    public Client editClient(UUID id, ClientRequestDTO data) {
+        Client client = getClientByID(id);
 
         client.setName(data.name());
         client.setEmail(data.email());

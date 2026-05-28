@@ -15,7 +15,7 @@ public class SuplierService {
      * Cria Fornecedor
      */
 
-    public Suplier CreateSuplier(SuplierRequestDTO data) {
+    public Suplier createSuplier(SuplierRequestDTO data) {
         Suplier suplier = new Suplier();
 
         suplier.setCnpj(data.cnpj());
@@ -31,7 +31,7 @@ public class SuplierService {
      * Busca todos os Fornecedores
      */
 
-    public List<Suplier> GetAllSupliers() {
+    public List<Suplier> getAllSupliers() {
         return suplierRepository.findAll();
     }
 
@@ -39,17 +39,17 @@ public class SuplierService {
      *Busca Fornecedor por ID
      */
 
-    public Suplier GetClientByID(UUID id) {
+    public Suplier getSuplierByID(UUID id) {
         return suplierRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nenhum Cliente encontrado"));
+                .orElseThrow(() -> new RuntimeException("Nenhum Fornecedor encontrado"));
     }
 
     /*
-     * Edita Cliente
+     * Edita Fornecedor
      */
 
-    public Suplier EditSuplier(UUID id, SuplierRequestDTO data) {
-        Suplier suplier = GetClientByID(id);
+    public Suplier editSuplier(UUID id, SuplierRequestDTO data) {
+        Suplier suplier = getSuplierByID(id);
 
         suplier.setName(data.name());
         suplier.setEmail(data.email());
@@ -61,11 +61,11 @@ public class SuplierService {
     }
 
     /*
-     * Deleta Cliente
+     * Deleta Fornecedor
      */
 
-    public void deleteClient(UUID id) {
-        Suplier suplier = suplierRepository.findById(id).orElseThrow(() -> new RuntimeException("Nenhum Cliente encontrado"));
+    public void deleteSuplier(UUID id) {
+        Suplier suplier = suplierRepository.findById(id).orElseThrow(() -> new RuntimeException("Nenhum Fornecedor encontrado"));
         suplierRepository.delete(suplier);
     }
 }

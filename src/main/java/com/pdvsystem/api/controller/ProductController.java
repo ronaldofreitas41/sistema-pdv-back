@@ -52,8 +52,8 @@ public class ProductController {
 
     // DELETE /api/product/{id} — deletar produto
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
         productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Deletado com sucesso");
     }
 }
