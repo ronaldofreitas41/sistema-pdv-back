@@ -1,4 +1,4 @@
-package com.pdvsystem.api.domain.countrecieve;
+package com.pdvsystem.api.domain.count;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,5 +29,6 @@ public class Count {
     private String status;
     private Double valor;
     private Date vencimento;
+    private String Type;
 
 }

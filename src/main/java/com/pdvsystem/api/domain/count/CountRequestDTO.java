@@ -1,4 +1,4 @@
-package com.pdvsystem.api.domain.countrecieve;
+package com.pdvsystem.api.domain.count;
 
 import java.util.Date;
 
