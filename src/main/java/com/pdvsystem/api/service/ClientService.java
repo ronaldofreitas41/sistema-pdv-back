@@ -3,11 +3,12 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.client.ClientRequestDTO;
 import com.pdvsystem.api.repositories.ClientRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-
+@Service
 public class ClientService {
 
     private ClientRepository clientRepository;

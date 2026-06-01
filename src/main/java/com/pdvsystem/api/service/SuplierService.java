@@ -3,10 +3,12 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.suplier.Suplier;
 import com.pdvsystem.api.domain.suplier.SuplierRequestDTO;
 import com.pdvsystem.api.repositories.SuplierRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class SuplierService {
 
     private SuplierRepository suplierRepository;

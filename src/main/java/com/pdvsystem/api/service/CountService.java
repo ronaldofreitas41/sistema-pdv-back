@@ -3,10 +3,12 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.count.Count;
 import com.pdvsystem.api.domain.count.CountRequestDTO;
 import com.pdvsystem.api.repositories.CountRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class CountService {
 
     private CountRepository countRepository;
