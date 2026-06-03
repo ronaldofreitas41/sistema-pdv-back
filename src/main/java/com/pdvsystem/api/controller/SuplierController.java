@@ -41,12 +41,14 @@ public class SuplierController {
     }
 
     //PUT - api/suplier/{id} - Edita um fornecedor
+    @PutMapping("/{id}")
     public ResponseEntity<Suplier> editSuplier(@RequestBody SuplierRequestDTO body, @PathVariable UUID id) {
         Suplier suplier = suplierService.editSuplier(id,body);
         return ResponseEntity.ok(suplier);
     }
 
     //DELETE - api/suplier/{id} - Deleta um fornecedor
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSuplier(@PathVariable UUID id) {
         suplierService.deleteSuplier(id);
         return ResponseEntity.ok("Deletado com sucesso!");

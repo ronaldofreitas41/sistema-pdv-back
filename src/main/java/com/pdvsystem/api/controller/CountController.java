@@ -53,12 +53,14 @@ public class CountController {
     }
 
     //PUT - api/count/{id} - Edita uma conta
+    @PutMapping("/{id}")
     public ResponseEntity<Count> editCount(@RequestBody CountRequestDTO body, @PathVariable UUID id) {
         Count count = countService.editCount(id,body);
         return ResponseEntity.ok(count);
     }
 
     //DELETE - api/count/{id} - Deleta uma conta
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCount(@PathVariable UUID id) {
         countService.deletCount(id);
         return ResponseEntity.ok("Deletado com sucesso!");
