@@ -26,5 +26,7 @@ public class Client {
     private String email;
     private String telefone;
     private String endereco;
+    private boolean status;
+    private Double cashback;
 
 }

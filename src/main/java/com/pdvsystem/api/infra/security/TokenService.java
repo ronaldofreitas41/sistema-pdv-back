@@ -23,7 +23,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(user.getEmail())
+                    .withSubject(user.getUsername())
                     .withExpiresAt(generateTokenExpirationDate())
                     .sign(algorithm);
             return token;
@@ -41,11 +41,11 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         }catch(JWTVerificationException exception) {
-            return "Invalid token";
+            return null;
         }
     }
 
     private Instant generateTokenExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusDays(1).toInstant(ZoneOffset.of("-03:00"));
     }
 }

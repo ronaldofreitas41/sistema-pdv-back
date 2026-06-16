@@ -3,6 +3,7 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.client.ClientRequestDTO;
 import com.pdvsystem.api.repositories.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Service
 public class ClientService {
 
+    @Autowired
     private ClientRepository clientRepository;
 
     /*
@@ -25,6 +27,8 @@ public class ClientService {
         client.setEmail(data.email());
         client.setTelefone(data.telefone());
         client.setEndereco(data.endereco());
+        client.setCashback(data.cashback());
+        client.setStatus(false);
 
         return clientRepository.save(client);
     }
@@ -58,6 +62,8 @@ public class ClientService {
         client.setTelefone(data.telefone());
         client.setEndereco(data.endereco());
         client.setCpf(data.cpf());
+        client.setCashback(data.cashback());
+        client.setStatus(data.status());
 
         return clientRepository.save(client);
     }

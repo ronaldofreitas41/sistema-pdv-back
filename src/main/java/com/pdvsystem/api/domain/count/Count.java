@@ -29,6 +29,6 @@ public class Count {
     private String status;
     private Double valor;
     private Date vencimento;
-    private String Type;
+    private String type;
 
 }

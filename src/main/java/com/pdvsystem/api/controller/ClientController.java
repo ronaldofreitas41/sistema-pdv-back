@@ -25,14 +25,14 @@ public class ClientController {
         return ResponseEntity.ok(client);
     }
 
-    //GET - api/client/pay - Busca os clientes
+    //GET - api/client- Busca os clientes
     @GetMapping
     public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }
 
-    //POST - api/client/pay - Cria um novo cliente
+    //POST - api/client - Cria um novo cliente
     @PostMapping
     public ResponseEntity<Client> createClient(@RequestBody ClientRequestDTO body) {
         Client client = clientService.createClient(body);

@@ -3,6 +3,7 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.count.Count;
 import com.pdvsystem.api.domain.count.CountRequestDTO;
 import com.pdvsystem.api.repositories.CountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Service
 public class CountService {
 
+    @Autowired
     private CountRepository countRepository;
 
     //Contas a Receber
@@ -26,7 +28,7 @@ public class CountService {
         count.setValor(data.valor());
         count.setVencimento(data.vencimento());
         count.setStatus(data.status());
-        count.setType("Receber");
+        count.setType("RECIEVE");
 
         return countRepository.save(count);
     }
@@ -35,14 +37,7 @@ public class CountService {
      * Busca todas as Contas a Receber
      */
     public List<Count> getAllCountRecieve() {
-        List<Count> contas = countRepository.findAll();
-        contas.forEach(count -> {
-                    if (!count.getType().equals("Receber")) {
-                        contas.remove(count);
-                    }
-                }
-        );
-        return contas;
+        return countRepository.findByType("RECIEVE");
     }
 
 
@@ -60,7 +55,7 @@ public class CountService {
         count.setValor(data.valor());
         count.setVencimento(data.vencimento());
         count.setStatus(data.status());
-        count.setType("Pagar");
+        count.setType("PAY");
 
         return countRepository.save(count);
     }
@@ -69,14 +64,7 @@ public class CountService {
      * Busca todas as Contas
      */
     public List<Count> getAllCountPay() {
-        List<Count> contas = countRepository.findAll();
-        contas.forEach(count -> {
-                    if (!count.getType().equals("Pagar")) {
-                        contas.remove(count);
-                    }
-                }
-        );
-        return contas;
+        return countRepository.findByType("PAY");
     }
 
     //-------------------------------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package com.pdvsystem.api.domain.suplier;
+package com.pdvsystem.api.domain.supplier;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Suplier {
+public class Supplier {
 
     @Id
     @GeneratedValue
