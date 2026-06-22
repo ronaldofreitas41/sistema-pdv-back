@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Table(name = "cash_moviments")
@@ -23,6 +24,7 @@ public class CashMoviment {
     private String type;
     private Double amount;
     private String description;
+    private Date dataMovimentacao;
 
 
 }

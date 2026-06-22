@@ -2,10 +2,14 @@ package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.client.ClientRequestDTO;
+import com.pdvsystem.api.domain.client.ClientRequestSaleDTO;
 import com.pdvsystem.api.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +32,8 @@ public class ClientService {
         client.setTelefone(data.telefone());
         client.setEndereco(data.endereco());
         client.setCashback(data.cashback());
+        client.setUltimaCompra(null);
+        client.setValidadeCashback(null);
         client.setStatus(false);
 
         return clientRepository.save(client);
@@ -64,6 +70,32 @@ public class ClientService {
         client.setCpf(data.cpf());
         client.setCashback(data.cashback());
         client.setStatus(data.status());
+        client.setUltimaCompra(null);
+        client.setValidadeCashback(null);
+
+        return clientRepository.save(client);
+    }
+    public Client editClientVenda(UUID id, ClientRequestSaleDTO data) {
+        Client client = getClientByID(id);
+
+        client.setName(data.name());
+        client.setEmail(data.email());
+        client.setTelefone(data.telefone());
+        client.setEndereco(data.endereco());
+        client.setCpf(data.cpf());
+        client.setCashback(data.cashback());
+        client.setStatus(data.status());
+        client.setUltimaCompra(data.ultimaCompra());
+        Date validade = data.validadeCashback();
+        LocalDate novaData = validade.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .plusDays(45);
+
+        Date novaValidade = Date.from(
+                novaData.atStartOfDay(ZoneId.systemDefault()).toInstant()
+        );
+        client.setValidadeCashback(novaValidade);
 
         return clientRepository.save(client);
     }
@@ -73,7 +105,7 @@ public class ClientService {
      */
 
     public void deleteClient(UUID id) {
-        Client client = clientRepository.findById(id).orElseThrow(()-> new RuntimeException("Nenhum Cliente encontrado"));
+        Client client = clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Nenhum Cliente encontrado"));
 
         clientRepository.delete(client);
     }

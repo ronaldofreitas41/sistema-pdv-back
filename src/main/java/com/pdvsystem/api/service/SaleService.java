@@ -37,15 +37,17 @@ public class SaleService {
         Client client = clientRepository.findById(data.clientId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-        User user = userRepository.findById(data.userId())
+        User user = userRepository.findById(data.userID())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         Sale sale = new Sale();
 
         sale.setClient(client);
-        sale.setUser(user);
+        sale.setUserID(user.getId());
+        sale.setUserName(user.getName());
         sale.setCashBack(data.cashBack());
         sale.setTotal(data.total());
+        sale.setFormaPagamento(data.formaPagamento());
         sale.setCreatedAt(LocalDateTime.now());
 
         List<SaleItem> items = new ArrayList<>();

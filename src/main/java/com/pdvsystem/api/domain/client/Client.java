@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Table(name = "Clients")
@@ -28,5 +29,7 @@ public class Client {
     private String endereco;
     private boolean status;
     private Double cashback;
+    private Date ultimaCompra;
+    private Date validadeCashback;
 
 }

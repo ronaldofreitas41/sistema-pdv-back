@@ -34,9 +34,9 @@ public class Sale {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String userID;
+    private String userName;
+    private String formaPagamento;
 
     private Double cashBack;
     private Double total;

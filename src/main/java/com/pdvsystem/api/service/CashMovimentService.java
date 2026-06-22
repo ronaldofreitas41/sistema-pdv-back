@@ -22,6 +22,7 @@ public class CashMovimentService {
         moviment.setType(data.type());
         moviment.setAmount(data.amount());
         moviment.setDescription(data.description());
+        moviment.setDataMovimentacao(data.dataMovimentacao());
 
         return repository.save(moviment);
     }

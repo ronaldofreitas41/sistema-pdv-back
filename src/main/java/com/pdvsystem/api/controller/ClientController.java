@@ -3,6 +3,7 @@ package com.pdvsystem.api.controller;
 
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.client.ClientRequestDTO;
+import com.pdvsystem.api.domain.client.ClientRequestSaleDTO;
 import com.pdvsystem.api.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class ClientController {
     @PutMapping("/{id}")
     public ResponseEntity<Client> editClient(@RequestBody ClientRequestDTO body, @PathVariable UUID id) {
         Client client = clientService.editClient(id, body);
+        return ResponseEntity.ok(client);
+    }
+    //PUT - api/client/venda/{id} - Edita um cliente
+    @PutMapping("/venda/{id}")
+    public ResponseEntity<Client> editClientVenda(@RequestBody ClientRequestSaleDTO body, @PathVariable UUID id) {
+        Client client = clientService.editClientVenda(id, body);
         return ResponseEntity.ok(client);
     }
 
