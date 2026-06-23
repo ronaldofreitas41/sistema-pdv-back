@@ -83,7 +83,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:3000","https://sistema-pdv-git-main-ronaldofreitas41s-projects.vercel.app")
+                List.of("http://localhost:3000","https://sistema-pdv-git-main-ronaldofreitas41s-projects.vercel.app","https://sistema-pdv-ten.vercel.app")
         );
 
         configuration.setAllowedMethods(
