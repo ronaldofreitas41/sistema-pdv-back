@@ -26,12 +26,21 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private UserRoles role;
+    private String companyId;
 
     public User (String email, String password,String name, UserRoles role) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.name = name;
+    }
+
+    public User (String email, String password,String name, UserRoles role, String companyId) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.name = name;
+        this.companyId = companyId;
     }
 
     @Override

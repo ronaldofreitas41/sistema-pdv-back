@@ -1,15 +1,20 @@
 package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.client.Client;
+import com.pdvsystem.api.domain.count.CountRequestDTO;
+import com.pdvsystem.api.domain.moviment.CashMovimentRequestDTO;
 import com.pdvsystem.api.domain.product.Product;
 import com.pdvsystem.api.domain.sale.*;
 import com.pdvsystem.api.domain.user.User;
 import com.pdvsystem.api.repositories.*;
+import com.pdvsystem.api.service.CashMovimentService;
+import com.pdvsystem.api.service.CountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -32,6 +37,12 @@ public class SaleService {
     @Autowired
     private SaleItemRepository saleItemRepository;
 
+    @Autowired
+    private CountService countService;
+
+    @Autowired
+    private CashMovimentService cashMovimentService;
+
     public Sale createSale(SaleRequestDTO data) {
 
         Client client = clientRepository.findById(data.clientId())
@@ -45,20 +56,31 @@ public class SaleService {
         sale.setClient(client);
         sale.setUserID(user.getId());
         sale.setUserName(user.getName());
+        sale.setCompanyId(user.getCompanyId());
         sale.setCashBack(data.cashBack());
         sale.setTotal(data.total());
         sale.setFormaPagamento(data.formaPagamento());
         sale.setCreatedAt(LocalDateTime.now());
 
         List<SaleItem> items = new ArrayList<>();
+        List<Product> updatedProducts = new ArrayList<>();
 
         for (SaleItemRequestDTO itemDTO : data.items()) {
 
             Product product = productRepository.findById(itemDTO.productId())
                     .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-            SaleItem item = new SaleItem();
+            if (product.getEstoque() == null) {
+                product.setEstoque(0);
+            }
+            if (itemDTO.quantity() > product.getEstoque()) {
+                throw new RuntimeException("Estoque insuficiente para o produto " + product.getNome());
+            }
 
+            product.setEstoque(product.getEstoque() - itemDTO.quantity());
+            updatedProducts.add(product);
+
+            SaleItem item = new SaleItem();
             item.setSale(sale);
             item.setProduct(product);
             item.setQuantity(itemDTO.quantity());
@@ -68,8 +90,39 @@ public class SaleService {
         }
 
         sale.setItems(items);
+        Sale savedSale = saleRepository.save(sale);
+        productRepository.saveAll(updatedProducts);
 
-        return saleRepository.save(sale);
+        String payment = data.formaPagamento();
+        String countStatus = "PENDENTE";
+        if (payment != null) {
+            String normalized = payment.toUpperCase();
+            if (normalized.contains("DINHEIRO") || normalized.contains("PIX") || normalized.contains("CARTAO") || normalized.contains("CARTÃO")) {
+                countStatus = "RECEBIDO";
+            }
+        }
+
+        CountRequestDTO countRequest = new CountRequestDTO(
+                "Venda " + savedSale.getId() + " - " + savedSale.getUserName(),
+                "Venda",
+                countStatus,
+                savedSale.getTotal(),
+                new Date(),
+                "RECIEVE",
+                savedSale.getUserID(),
+                savedSale.getCompanyId()
+        );
+        countService.createCountRecieve(countRequest);
+
+        CashMovimentRequestDTO cashMovimentRequest = new CashMovimentRequestDTO(
+                "SALE",
+                savedSale.getTotal(),
+                "Venda realizada: " + savedSale.getId(),
+                new Date()
+        );
+        cashMovimentService.create(cashMovimentRequest);
+
+        return savedSale;
     }
 
     public List<Sale> getAllSales() {
@@ -84,6 +137,10 @@ public class SaleService {
     public void deleteSale(UUID id) {
         Sale sale = getSaleById(id);
         saleRepository.delete(sale);
+    }
+
+    public List<Sale> getSalesByUserId(String userID) {
+        return saleRepository.findByUserID(userID);
     }
 
     public List<SaleItemResponseDTO> getItensOnSale(UUID id) {

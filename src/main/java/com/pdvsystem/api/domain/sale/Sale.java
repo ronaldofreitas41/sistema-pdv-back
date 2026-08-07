@@ -40,6 +40,7 @@ public class Sale {
 
     private Double cashBack;
     private Double total;
+    private String companyId;
     private LocalDateTime createdAt;
 
 

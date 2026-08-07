@@ -25,6 +25,9 @@ public class AuthenticationController {
     private UserRepository userRepository;
 
     @Autowired
+    private com.pdvsystem.api.repositories.CompanyRepository companyRepository;
+
+    @Autowired
     private TokenService tokenService;
 
     @PostMapping("/login")
@@ -44,8 +47,15 @@ public class AuthenticationController {
             return  ResponseEntity.badRequest().build();
         }
 
+        // validate company and company password
+        var company = companyRepository.findById(body.companyId()).orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
+        boolean ok = new BCryptPasswordEncoder().matches(body.companyPassword(), company.getPassword());
+        if (!ok) {
+            return ResponseEntity.status(403).body("Senha da empresa inválida");
+        }
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(body.password());
-        User newUser = new User(body.email(), encryptedPassword,body.name(), body.role());
+        User newUser = new User(body.email(), encryptedPassword,body.name(), body.role(), body.companyId());
 
         this.userRepository.save(newUser);
 

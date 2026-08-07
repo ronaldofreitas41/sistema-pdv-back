@@ -29,6 +29,11 @@ public class CountService {
         count.setVencimento(data.vencimento());
         count.setStatus(data.status());
         count.setType("RECIEVE");
+        count.setUserId(data.userId());
+        try {
+            // may be null in some calls
+            count.setCompanyId(data.companyId());
+        } catch (Exception ignored) {}
 
         return countRepository.save(count);
     }
@@ -38,6 +43,10 @@ public class CountService {
      */
     public List<Count> getAllCountRecieve() {
         return countRepository.findByType("RECIEVE");
+    }
+
+    public List<Count> getAllCountRecieveByUser(String userId) {
+        return countRepository.findByTypeAndUserId("RECIEVE", userId);
     }
 
 
@@ -56,6 +65,10 @@ public class CountService {
         count.setVencimento(data.vencimento());
         count.setStatus(data.status());
         count.setType("PAY");
+        count.setUserId(data.userId());
+        try {
+            count.setCompanyId(data.companyId());
+        } catch (Exception ignored) {}
 
         return countRepository.save(count);
     }
@@ -65,6 +78,10 @@ public class CountService {
      */
     public List<Count> getAllCountPay() {
         return countRepository.findByType("PAY");
+    }
+
+    public List<Count> getAllCountPayByUser(String userId) {
+        return countRepository.findByTypeAndUserId("PAY", userId);
     }
 
     //-------------------------------------------------------------------------------------------------------------------
@@ -91,6 +108,8 @@ public class CountService {
         count.setVencimento(data.vencimento());
         count.setStatus(data.status());
         count.setType(data.type());
+        count.setUserId(data.userId());
+        try { count.setCompanyId(data.companyId()); } catch (Exception ignored) {}
 
         return countRepository.save(count);
     }

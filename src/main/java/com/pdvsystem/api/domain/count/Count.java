@@ -30,5 +30,7 @@ public class Count {
     private Double valor;
     private Date vencimento;
     private String type;
+    private String userId;
+    private String companyId;
 
 }

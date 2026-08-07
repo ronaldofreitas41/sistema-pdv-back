@@ -40,6 +40,24 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Product>> getProductsByUser(@PathVariable String userId) {
+        return ResponseEntity.ok(productService.getProductsByUserId(userId));
+    }
+
+    @GetMapping("/segment/{segmento}")
+    public ResponseEntity<List<Product>> getProductsBySegment(@PathVariable String segmento) {
+        return ResponseEntity.ok(productService.getProductsBySegmento(segmento));
+    }
+
+    @GetMapping("/user/{userId}/segment/{segmento}")
+    public ResponseEntity<List<Product>> getProductsByUserAndSegment(
+            @PathVariable String userId,
+            @PathVariable String segmento
+    ) {
+        return ResponseEntity.ok(productService.getProductsByUserIdAndSegmento(userId, segmento));
+    }
+
     // PUT /api/product/{id} — atualizar produto
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(

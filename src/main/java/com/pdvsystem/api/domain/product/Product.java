@@ -29,6 +29,11 @@ public class Product {
     private Double preco;
     private String codigo;
     private String categoria;
+    private String segmento;
+    private String tipoQuantidade;
+    private String unidadeMedida;
+    private String userId;
+    private String companyId;
     private String nome;
 
 }

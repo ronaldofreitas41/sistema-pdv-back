@@ -23,6 +23,11 @@ public class ProductService {
         Product product = new Product();
 
         product.setCategoria(data.categoria());
+        product.setSegmento(data.segmento());
+        product.setTipoQuantidade(data.tipoQuantidade());
+        product.setUnidadeMedida(data.unidadeMedida());
+        product.setUserId(data.userId());
+        product.setCompanyId(data.companyId());
         product.setCodigo(data.codigo());
         product.setCusto(data.custo());
         product.setEstoque(data.estoque());
@@ -48,6 +53,18 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> getProductsByUserId(String userId) {
+        return productRepository.findByUserId(userId);
+    }
+
+    public List<Product> getProductsBySegmento(String segmento) {
+        return productRepository.findBySegmento(segmento);
+    }
+
+    public List<Product> getProductsByUserIdAndSegmento(String userId, String segmento) {
+        return productRepository.findByUserIdAndSegmento(userId, segmento);
+    }
+
     /*
      * Atualizar produto
      */
@@ -57,11 +74,16 @@ public class ProductService {
 
         product.setNome(data.nome());
         product.setCodigo(data.codigo());
+        product.setCategoria(data.categoria());
+        product.setSegmento(data.segmento());
+        product.setTipoQuantidade(data.tipoQuantidade());
+        product.setUnidadeMedida(data.unidadeMedida());
+        product.setUserId(data.userId());
+        product.setCompanyId(data.companyId());
         product.setPreco(data.preco());
         product.setCusto(data.custo());
         product.setEstoque(data.estoque());
         product.setEstoqueMin(data.estoqueMin());
-        product.setCategoria(data.categoria());
 
         return productRepository.save(product);
     }
