@@ -27,5 +27,6 @@ public class Supplier {
     private String email;
     private String telefone;
     private String endereco;
+    private String companyId;
 
 }

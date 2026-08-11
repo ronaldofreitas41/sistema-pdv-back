@@ -2,6 +2,7 @@ package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.product.ProductRequestDTO;
 import com.pdvsystem.api.domain.product.Product;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,27 +43,33 @@ public class ProductService {
      * Buscar Produtos por Id
      */
     public Product getProductById(UUID id) {
-        return productRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("Produto não localizado"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Produto não localizado"));
+
+        if (!product.getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Produto não localizado");
+        }
+
+        return product;
     }
 
     /*
      * Buscar Produtos
      */
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findByCompanyId(SecurityUtils.getCompanyId());
     }
 
     public List<Product> getProductsByUserId(String userId) {
-        return productRepository.findByUserId(userId);
+        return productRepository.findByUserIdAndCompanyId(userId, SecurityUtils.getCompanyId());
     }
 
     public List<Product> getProductsBySegmento(String segmento) {
-        return productRepository.findBySegmento(segmento);
+        return productRepository.findByCompanyIdAndSegmento(SecurityUtils.getCompanyId(), segmento);
     }
 
     public List<Product> getProductsByUserIdAndSegmento(String userId, String segmento) {
-        return productRepository.findByUserIdAndSegmento(userId, segmento);
+        return productRepository.findByUserIdAndSegmentoAndCompanyId(userId, segmento, SecurityUtils.getCompanyId());
     }
 
     /*

@@ -27,6 +27,7 @@ public class Client {
     private String email;
     private String telefone;
     private String endereco;
+    private String companyId;
     private boolean status;
     private Double cashback;
     private Date ultimaCompra;

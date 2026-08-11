@@ -2,6 +2,7 @@ package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.supplier.Supplier;
 import com.pdvsystem.api.domain.supplier.SupplierRequestDTO;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class SupplierService {
         supplier.setEmail(data.email());
         supplier.setTelefone(data.telefone());
         supplier.setEndereco(data.endereco());
+        supplier.setCompanyId(SecurityUtils.getCompanyId());
 
         return supplierRepository.save(supplier);
     }
@@ -36,7 +38,7 @@ public class SupplierService {
      */
 
     public List<Supplier> getAllSupliers() {
-        return supplierRepository.findAll();
+        return supplierRepository.findByCompanyId(SecurityUtils.getCompanyId());
     }
 
     /*
@@ -44,8 +46,14 @@ public class SupplierService {
      */
 
     public Supplier getSuplierByID(UUID id) {
-        return supplierRepository.findById(id)
+        Supplier supplier = supplierRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum Fornecedor encontrado"));
+
+        if (!supplier.getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Nenhum Fornecedor encontrado");
+        }
+
+        return supplier;
     }
 
     /*

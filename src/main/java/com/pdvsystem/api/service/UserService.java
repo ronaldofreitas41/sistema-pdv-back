@@ -3,6 +3,7 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.supplier.Supplier;
 import com.pdvsystem.api.domain.user.RegisterDTO;
 import com.pdvsystem.api.domain.user.User;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class UserService {
      * Busca todos os usuários
      */
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findByCompanyId(SecurityUtils.getCompanyId());
     }
 
     /*

@@ -3,6 +3,7 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.client.ClientRequestDTO;
 import com.pdvsystem.api.domain.client.ClientRequestSaleDTO;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class ClientService {
         client.setEmail(data.email());
         client.setTelefone(data.telefone());
         client.setEndereco(data.endereco());
+        client.setCompanyId(SecurityUtils.getCompanyId());
         client.setCashback(data.cashback());
         client.setUltimaCompra(null);
         client.setValidadeCashback(null);
@@ -44,7 +46,7 @@ public class ClientService {
      */
 
     public List<Client> getAllClients() {
-        return clientRepository.findAll();
+        return clientRepository.findByCompanyId(SecurityUtils.getCompanyId());
     }
 
     /*
@@ -52,8 +54,14 @@ public class ClientService {
      */
 
     public Client getClientByID(UUID id) {
-        return clientRepository.findById(id)
+        Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhum Cliente encontrado"));
+
+        if (!client.getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Nenhum Cliente encontrado");
+        }
+
+        return client;
     }
 
     /*

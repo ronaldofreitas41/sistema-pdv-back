@@ -3,6 +3,7 @@ package com.pdvsystem.api.service;
 import com.pdvsystem.api.domain.product.Product;
 import com.pdvsystem.api.domain.moviment.StockMoviment;
 import com.pdvsystem.api.domain.moviment.StockMovimentDTO;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.ProductRepository;
 import com.pdvsystem.api.repositories.StockMovimentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class StockMovimentService {
         Product product = productRepository.findById(data.productId())
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
+        if (!product.getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Produto não encontrado");
+        }
+
         StockMoviment moviment = new StockMoviment();
 
         moviment.setType(data.type());
@@ -35,12 +40,18 @@ public class StockMovimentService {
     }
 
     public List<StockMoviment> getAll() {
-        return repository.findAll();
+        return repository.findByProductCompanyId(SecurityUtils.getCompanyId());
     }
 
     public StockMoviment getById(UUID id) {
-        return repository.findById(id)
+        StockMoviment moviment = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movimentação não encontrada"));
+
+        if (!moviment.getProduct().getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Movimentação não encontrada");
+        }
+
+        return moviment;
     }
 
     public void deleteMoviment(UUID id) {

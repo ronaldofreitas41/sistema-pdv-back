@@ -62,6 +62,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/supplier").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/supplier/{id}").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/supplier/{id}").hasAnyRole("MANAGER", "ADMIN")
+
+                        //Rotas de Empresa (Somente para Gerentes ou Adimin)
+                        .requestMatchers(HttpMethod.GET, "/api/company").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/company").hasAnyRole("MANAGER", "ADMIN")
+                        
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -2,6 +2,7 @@ package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.count.Count;
 import com.pdvsystem.api.domain.count.CountRequestDTO;
+import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.CountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class CountService {
      * Busca todas as Contas a Receber
      */
     public List<Count> getAllCountRecieve() {
-        return countRepository.findByType("RECIEVE");
+        return countRepository.findByTypeAndCompanyId("RECIEVE", SecurityUtils.getCompanyId());
     }
 
     public List<Count> getAllCountRecieveByUser(String userId) {
@@ -77,7 +78,7 @@ public class CountService {
      * Busca todas as Contas
      */
     public List<Count> getAllCountPay() {
-        return countRepository.findByType("PAY");
+        return countRepository.findByTypeAndCompanyId("PAY", SecurityUtils.getCompanyId());
     }
 
     public List<Count> getAllCountPayByUser(String userId) {
@@ -91,8 +92,14 @@ public class CountService {
      * Busca Conta por ID
      */
     public Count getCountPayByID(UUID id) {
-        return countRepository.findById(id)
+        Count count = countRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nenhuma Conta Encontrada"));
+
+        if (!count.getCompanyId().equals(SecurityUtils.getCompanyId())) {
+            throw new RuntimeException("Nenhuma Conta Encontrada");
+        }
+
+        return count;
     }
 
     /*
