@@ -48,11 +48,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/api/count/{id}").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/count{id}").hasAnyRole("MANAGER", "ADMIN")
 
-                        //Rotas de Produtos (Somente para Gerentes ou Admin)
-                        .requestMatchers(HttpMethod.POST, "/api/product").hasAnyRole("MANAGER", "ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/product/{id}").hasAnyRole("MANAGER", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/product/{id}").hasAnyRole("MANAGER", "ADMIN")
-
                         //Rotas de Clientes (Somente para Gerentes ou Adimin)
                         .requestMatchers(HttpMethod.POST, "/api/client").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/client/{id}").hasAnyRole("MANAGER", "ADMIN")
@@ -66,7 +61,7 @@ public class SecurityConfiguration {
                         //Rotas de Empresa (Somente para Gerentes ou Adimin)
                         .requestMatchers(HttpMethod.GET, "/api/company").hasAnyRole("MANAGER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/company").hasAnyRole("MANAGER", "ADMIN")
-                        
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

@@ -32,5 +32,7 @@ public class Count {
     private String type;
     private String userId;
     private String companyId;
+    private UUID supplierId;
+    private UUID clientId;
 
 }

@@ -110,7 +110,9 @@ public class SaleService {
                 new Date(),
                 "RECIEVE",
                 savedSale.getUserID(),
-                savedSale.getCompanyId()
+                savedSale.getCompanyId(),
+                null,
+                client.getId()
         );
         countService.createCountRecieve(countRequest);
 

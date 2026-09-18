@@ -31,10 +31,9 @@ public class CountService {
         count.setStatus(data.status());
         count.setType("RECIEVE");
         count.setUserId(data.userId());
-        try {
-            // may be null in some calls
-            count.setCompanyId(data.companyId());
-        } catch (Exception ignored) {}
+        count.setCompanyId(data.companyId());
+        count.setSupplierId(data.supplierId());
+        count.setClientId(data.clientId());
 
         return countRepository.save(count);
     }
@@ -67,9 +66,9 @@ public class CountService {
         count.setStatus(data.status());
         count.setType("PAY");
         count.setUserId(data.userId());
-        try {
-            count.setCompanyId(data.companyId());
-        } catch (Exception ignored) {}
+        count.setCompanyId(data.companyId());
+        count.setSupplierId(data.supplierId());
+        count.setClientId(data.clientId());
 
         return countRepository.save(count);
     }
@@ -116,7 +115,9 @@ public class CountService {
         count.setStatus(data.status());
         count.setType(data.type());
         count.setUserId(data.userId());
-        try { count.setCompanyId(data.companyId()); } catch (Exception ignored) {}
+        count.setCompanyId(data.companyId());
+        count.setSupplierId(data.supplierId());
+        count.setClientId(data.clientId());
 
         return countRepository.save(count);
     }
