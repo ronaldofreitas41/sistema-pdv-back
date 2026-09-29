@@ -31,7 +31,7 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO body) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO body) {
         var usernamepassword = new UsernamePasswordAuthenticationToken(body.email(), body.password());
         var auth = authenticationManager.authenticate(usernamepassword);
 
@@ -42,7 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO body) {
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO body) {
         if (this.userRepository.findByEmail(body.email()) != null) {
             return  ResponseEntity.badRequest().build();
         }
@@ -62,9 +62,4 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
-
-
-
-
-    //@DeleteMapping("/user")
 }

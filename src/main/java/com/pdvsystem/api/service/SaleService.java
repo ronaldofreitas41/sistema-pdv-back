@@ -7,8 +7,6 @@ import com.pdvsystem.api.domain.product.Product;
 import com.pdvsystem.api.domain.sale.*;
 import com.pdvsystem.api.domain.user.User;
 import com.pdvsystem.api.repositories.*;
-import com.pdvsystem.api.service.CashMovimentService;
-import com.pdvsystem.api.service.CountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

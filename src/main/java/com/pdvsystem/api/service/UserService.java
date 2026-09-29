@@ -1,15 +1,13 @@
 package com.pdvsystem.api.service;
 
-import com.pdvsystem.api.domain.supplier.Supplier;
 import com.pdvsystem.api.domain.user.RegisterDTO;
 import com.pdvsystem.api.domain.user.User;
 import com.pdvsystem.api.infra.security.SecurityUtils;
 import com.pdvsystem.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 public class UserService {

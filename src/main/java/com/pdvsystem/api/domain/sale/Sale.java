@@ -2,14 +2,12 @@ package com.pdvsystem.api.domain.sale;
 
 import com.pdvsystem.api.domain.client.Client;
 
-import com.pdvsystem.api.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

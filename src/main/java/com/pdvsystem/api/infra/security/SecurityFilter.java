@@ -24,18 +24,18 @@ public class SecurityFilter extends OncePerRequestFilter {
     UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         var token = this.recoverToken(request);
 
         if (token != null) {
 
-            //Valida token
+            // Valida token
             var subject = tokenService.validateToken(token);
 
             UserDetails user = userRepository.findByEmail(subject);
 
-
-            if(user != null){
+            if (user != null) {
                 System.out.println("AUTHORITIES: " + user.getAuthorities());
             }
 
@@ -43,11 +43,27 @@ public class SecurityFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
 
         }
-            filterChain.doFilter(request, response);
+        System.out.println("======================================");
+        System.out.println("METHOD: " + request.getMethod());
+        System.out.println("URI: " + request.getRequestURI());
+
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            System.out.println("AUTHENTICATED: " + authentication.isAuthenticated());
+            System.out.println("USER: " + authentication.getName());
+            System.out.println("AUTHORITIES: " + authentication.getAuthorities());
+        } else {
+            System.out.println("AUTHENTICATION: NULL");
+        }
+
+        System.out.println("======================================");
+
+        filterChain.doFilter(request, response);
 
     }
 
-    //Recebe o token e converte ele manipulando somente a parte necessaria
+    // Recebe o token e converte ele manipulando somente a parte necessaria
     private String recoverToken(HttpServletRequest request) {
 
         var authorizationHeader = request.getHeader("Authorization");
