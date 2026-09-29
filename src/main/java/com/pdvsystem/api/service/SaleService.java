@@ -2,7 +2,6 @@ package com.pdvsystem.api.service;
 
 import com.pdvsystem.api.domain.client.Client;
 import com.pdvsystem.api.domain.count.CountRequestDTO;
-import com.pdvsystem.api.domain.moviment.CashMovimentRequestDTO;
 import com.pdvsystem.api.domain.product.Product;
 import com.pdvsystem.api.domain.sale.*;
 import com.pdvsystem.api.domain.user.User;
@@ -37,9 +36,6 @@ public class SaleService {
 
     @Autowired
     private CountService countService;
-
-    @Autowired
-    private CashMovimentService cashMovimentService;
 
     public Sale createSale(SaleRequestDTO data) {
 
@@ -113,15 +109,6 @@ public class SaleService {
                 client.getId()
         );
         countService.createCountRecieve(countRequest);
-
-        CashMovimentRequestDTO cashMovimentRequest = new CashMovimentRequestDTO(
-                "SALE",
-                savedSale.getTotal(),
-                "Venda realizada: " + savedSale.getId(),
-                new Date()
-        );
-        cashMovimentService.create(cashMovimentRequest);
-
         return savedSale;
     }
 

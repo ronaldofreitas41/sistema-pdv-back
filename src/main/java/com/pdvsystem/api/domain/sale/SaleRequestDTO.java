@@ -10,6 +10,7 @@ public record SaleRequestDTO(
         Double total,
         String pagamento,
         List<SaleItemRequestDTO> items,
-        String formaPagamento
+        String formaPagamento,
+        UUID companyId
 ) {
 }

@@ -23,6 +23,7 @@ public class CashMovimentService {
         moviment.setAmount(data.amount());
         moviment.setDescription(data.description());
         moviment.setDataMovimentacao(data.dataMovimentacao());
+        moviment.setCompanyId(data.companyId());
 
         return repository.save(moviment);
     }

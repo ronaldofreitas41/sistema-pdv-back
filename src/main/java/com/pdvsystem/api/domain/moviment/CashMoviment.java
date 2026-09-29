@@ -21,6 +21,7 @@ public class CashMoviment {
     @GeneratedValue
     private UUID id;
 
+    private UUID companyId;
     private String type;
     private Double amount;
     private String description;
