@@ -44,7 +44,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO body) {
         if (this.userRepository.findByEmail(body.email()) != null) {
-            return  ResponseEntity.badRequest().build();
+            return  ResponseEntity.badRequest().body("Email já cadastrado");
         }
 
         // validate company and company password
